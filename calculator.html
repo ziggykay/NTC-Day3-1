@@ -1,0 +1,79 @@
+
+
+<body>
+  <div id="app">
+    <header>Simple Calculator</header>
+
+    <div>{{initValue}}</div> 
+<div>
+
+  <templates v-for="num in 9">
+ 
+    <button @click="addNum(num)">{{ num }}</button>
+  </templates>
+  
+  <button @click="addNum(0)">0</button>
+</div>
+
+<templates v-for="operator in operators">
+  <button @click="operation(operator)">{{ operator }}</button>
+</templates>
+
+<button @click="equal()">=</button>
+<button @click="reset()">reset</button>
+</div>
+  
+<script src="https://unpkg.com/vue@3"></script>
+  <script>
+    Vue.createApp({
+     data(){
+      return{
+      initValue:'0',
+      operators: ['+', '-', '*', '/'],
+      savedValue: 0,
+      chooseOperator: '',
+    }
+  },
+    methods:{
+      addNum(value){
+        if( this.initValue == '0'){
+        this.initValue=value;
+        }else{//step5
+          this.initValue+=value.toString();
+        }
+      },
+      operation(operator){
+       this.savedValue = Number(this.initValue);
+       this.initValue = '0';
+       this.chooseOperator = operator;
+       
+       console.log(this.savedValue)
+       console.log(this.chooseOperator)
+      },
+    
+    equal(){
+       switch(this.chooseOperator){
+         case '+':
+           this.initValue = `${this.savedValue + Number(this.initValue)}`;
+           break;
+           case '-':
+           this.initValue =`${this.savedValue - Number(this.initValue)}`;
+           break;
+         case '*':
+           this.initValue =`${this.savedValue * Number(this.initValue)}`;
+           break;
+         case '/':
+           this.initValue =`${this.savedValue / Number(this.initValue)}`;
+           break;
+       }
+     },
+     reset(){
+      this.initValue = '0';
+      this.savedValue='';
+     }
+    },
+  }).mount('#app')
+</script>
+
+</body>
+</html>
